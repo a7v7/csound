@@ -15,9 +15,6 @@ So I went searching through my collection of CD-ROMs. I found the Amsterdam Cata
 ## Credits
    - ACCCI created by J.-P. Gather (1995)
    - Includes Jean-Claude Risset's Bell Lab Catalog instruments
-   - [Other contributors as appropriate]
-
-
 
 ## Moving Forward
 
