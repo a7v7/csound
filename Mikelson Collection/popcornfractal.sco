@@ -1,0 +1,7 @@
+
+
+; SCORE
+f1 0 65536 10 1 ; NOT USED SINE WAVE
+
+;   STA  DUR  AMP      PITCH  FADE
+i2  0    60   9000      6.00  2

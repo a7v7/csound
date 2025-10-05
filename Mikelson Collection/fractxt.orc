@@ -1,0 +1,161 @@
+;--------------------------------------------------------------------
+; An assortment of chaotic, fractal and related instruments
+; Coded by Hans Mikelson  March 27, 1997
+;--------------------------------------------------------------------
+; 1. The Lorenz Attractor
+; 2. The Rossler Attractor
+; 3. Planet Orbiting in a Binary Star System
+
+sr        =         44100
+kr        =         4410
+ksmps     =         10
+nchnls    =         2
+
+;--------------------------------------------------------------------
+; This instrument is based on the Lorenz equations one of the 
+; first chaotic systems discovered.  I use it here as an
+; oscillator.  ah can be used to change the pitch.  Scale
+; will change the volume.                                  
+;--------------------------------------------------------------------
+
+          instr     1
+
+;--------------------------------------------------------------------
+ax        init      p5
+ay        init      p6
+az        init      p7
+as        init      p8
+ar        init      p9
+ab        init      p10
+ah        init      p11
+
+kampenv   linseg    0,.01,p4,p3-.02,p4,.01,0 ; AMPLITUDE ENVELOPE
+
+;--------------------------------------------------------------------
+axnew     =         ax+ah*as*(ay-ax)
+aynew     =         ay+ah*(-ax*az+ar*ax-ay)
+aznew     =         az+ah*(ax*ay-ab*az)
+
+;--------------------------------------------------------------------
+ax        =         axnew
+ay        =         aynew
+az        =         aznew
+
+;--------------------------------------------------------------------
+          outs      ax*kampenv,ay*kampenv
+          endin
+
+;--------------------------------------------------------------------
+          instr 2             ; ROSSLER'S ATTRACTOR
+;--------------------------------------------------------------------
+
+ax        init      0
+ay        init      0
+az        init      0
+ih        init      p5
+aa        init      .375
+ib        init      p6
+ic        init      p7
+
+; AMPLITUDE ENVELOPE
+;--------------------------------------------------------------------
+kampenv   linseg    0,.01,p4,p3-.02,p4,.01,0
+
+;--------------------------------------------------------------------
+aa        oscil     1/7,.5,1
+aa        =         .3+aa
+
+;--------------------------------------------------------------------
+axnew     =         ax+ih*(-ay-az)
+aynew     =         ay+ih*(ax+aa*ay)
+aznew     =         az+ih*(ib+ax*az-ic*az)
+
+;--------------------------------------------------------------------
+ax        =         axnew
+ay        =         aynew
+az        =         aznew
+
+;--------------------------------------------------------------------
+          outs      kampenv*ax,kampenv*ay
+
+          endin
+
+;--------------------------------------------------------------------
+; THIS SIMULATES A PLANET ORBITING IN A MULTIPLE STAR SYSTEM.
+;--------------------------------------------------------------------
+         instr  3
+
+;--------------------------------------------------------------------
+kampenv   linseg    0, .1, p4, p3-.2, p4, .1, 0
+
+;--------------------------------------------------------------------
+; PLANET POSITION (X, Y, Z) & VELOCITY (VX, VY, VZ)
+kx        init      0
+ky        init      .1
+kz        init      0
+kvx       init      .5
+kvy       init      .6
+kvz       init      -.1
+ih        init      p5
+
+;--------------------------------------------------------------------
+; STAR 1 MASS & X, Y, Z
+imass1    init      p6
+is1x      init      0
+is1y      init      0
+is1z      init      p8
+
+;--------------------------------------------------------------------
+; STAR 2 MASS & X, Y, Z
+imass2    init      p7
+is2x      init      0
+is2y      init      0
+is2z      init      -p8
+
+;--------------------------------------------------------------------
+; CALCULATE DISTANCE TO STAR 1
+kdx       =         is1x-kx
+kdy       =         is1y-ky
+kdz       =         is1z-kz
+ksqradius =         kdx*kdx+kdy*kdy+kdz*kdz+1
+kradius   =         sqrt(ksqradius)
+
+;--------------------------------------------------------------------
+; DETERMINE ACCELERATION DUE TO STAR 1 (AX, AY, AZ)
+kax       =         imass1/ksqradius*kdx/kradius
+kay       =         imass1/ksqradius*kdy/kradius
+kaz       =         imass1/ksqradius*kdz/kradius
+
+;--------------------------------------------------------------------
+; CALCULATE DISTANCE TO STAR 2
+kdx       =         is2x-kx
+kdy       =         is2y-ky
+kdz       =         is2z-kz
+ksqradius =         kdx*kdx+kdy*kdy+kdz*kdz+1
+kradius   =         sqrt(ksqradius)
+
+;--------------------------------------------------------------------
+; DETERMINE ACCELERATION DUE TO STAR 2 (AX, AY, AZ)
+kax       =         kax+imass2/ksqradius*kdx/kradius
+kay       =         kay+imass2/ksqradius*kdy/kradius
+kaz       =         kaz+imass2/ksqradius*kdz/kradius
+
+;--------------------------------------------------------------------
+; UPDATE THE VELOCITY
+kvx       =         kvx+ih*kax
+kvy       =         kvy+ih*kay
+kvz       =         kvz+ih*kaz
+
+;--------------------------------------------------------------------
+; UPDATE THE POSITION
+kx        =         kx+ih*kvx
+ky        =         ky+ih*kvy
+kz        =         kz+ih*kvz
+
+aoutx     =         kx*kampenv
+aouty     =         ky*kampenv
+          outs      aoutx,aouty
+
+         endin
+
+

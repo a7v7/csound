@@ -1,0 +1,11 @@
+f2   0   1024   7   0  1024  1              ; STRAIGHT LINE RISE
+f10  0  131072  1  "hellorcb.aif"  0 4 0    ; SOME SOUND FILE, USE CONTINUOUS SOUND
+
+i1  0  10 10000 5               ; PLAY FOF2 WITH SOME TIME-STRETCH & PITCH CHANGE
+i2  10 20 10000 5               ; ...AND THEN FOG
+s
+i1  0  10 5000  50              ; PLAY FOF2 WITH SOME TIME-STRETCH & PITCH CHANGE
+i2  10 20 5000 50               ; ...AND THEN FOG
+s
+i1  0  10 1000  500             ; PLAY FOF2 WITH SOME TIME-STRETCH & PITCH CHANGE
+i2  10 20 1000 500              ; ...AND THEN FOG

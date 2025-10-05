@@ -1,0 +1,46 @@
+; *********************************************** 
+; TONE WHEEL ORGAN WITH ROTATING SPEAKER 
+; BY HANS MIKELSON 2/12/97
+; *********************************************** 
+; GEN FUNCTIONS ********************************* 
+; SINUS
+f1 0 1024 10 1
+
+;TONE WHEEL ORGAN	DRAWBARS
+;	SUBFUND FUND SUB 3RD 2ND HARM 3RD HARM 4TH HARM 5TH HARM 6TH HARM	8TH HARM
+f2 0 8192 10 8 8	8	4	0	5 0 3	0 0	0 0	0 0 0 8
+
+; LELIE FILTER ENVELOPES
+f3 0 256 7 0 110 .3 18 1 18 .3 110 0
+f4 0 256 7 0 80 .5 16 1 64 1 16 .5 80 0
+
+; Distortion Table
+f5 0 1024 8 -.8 42 -.78 100 -.7 740 .7 100 .78 42 .8 
+
+; SCORE ****************************************************************** 
+
+t 0 600
+
+; TONE WHEEL ORGAN
+; START DUR AMP PITCH
+i1 0 18 6000 7.04
+i2 0 18 6000 7.11
+i3 0 18 6000 8.02
+i1 18 3 6000 7.04
+i2 18 3 6000 7.09
+i3 18 3 6000 8.01
+i1 21 3 6000 7.04
+i2 21 3 6000 7.11
+i3 21 3 6000 8.02
+i1 24 3 6000 7.04
+i2 24 3 6000 7.09
+i3 24 3 6000 8.01
+i1 27 24 6000 7.04
+i2 27 24 6000 7.08
+i3 27 24 6000 7.11
+
+; ROTATING SPEAKER
+; START DUR    SPEEDI SPEEDF
+i4 0 18	.8	8
+i4 + 9	8	.8
+i4 . 24.1 .8	8
